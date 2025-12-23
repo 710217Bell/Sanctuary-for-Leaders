@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanctuary for Leaders</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Georgia&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fdf6e3 0%, #f5e8d0 100%);
+            min-height: 100vh;
+        }
+        .font-serif { font-family: 'Georgia', serif; }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .slide-up { animation: slideUp 0.4s ease-out; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .gentle-card {
+            background: linear-gradient(145deg, #ffffff 0%, #faf5e4 100%);
+            border: 1px solid #e9d8a6;
+        }
+        .deep-card {
+            background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 1px solid #ced4da;
+        }
+        .candle-glow {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #fff8e1 0%, #ffecb3 70%, #ffd54f 100%);
+            border-radius: 50%;
+            animation: glow 3s infinite alternate;
+            box-shadow: 0 0 60px 20px rgba(255, 214, 79, 0.3);
+        }
+        @keyframes glow {
+            0% { box-shadow: 0 0 40px 15px rgba(255, 214, 79, 0.2); }
+            100% { box-shadow: 0 0 80px 30px rgba(255, 214, 79, 0.4); }
+        }
+        .breathing-circle {
+            width: 140px;
+            height: 140px;
+            border: 2px solid #d4a574;
+            animation: breathe 8s infinite ease-in-out;
+        }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .toggle-switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e9d8a6;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #4f46e5;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+
+<body class="text-gray-800">
+<div id="app" class="max-w-4xl mx-auto p-4 min-h-screen"></div>
+
+<script>
+const sanctuaryTool = {
+    currentScreen: 'welcome',
+    sessionData: {},
+    insights: null,
+    artefact: null,
+    insightMode: 'gentle', // 'gentle' or 'deep'
+    screens: ['welcome', 'context', 'primary', 'secondary', 'sanctuary', 'insights', 'artefact', 'companionship', 'return'],
+    
+    // Sanctuary reflections
+    reflections: [
+        "You've said something that matters. Before we make sense of it, let's pause.",
+        "Nothing needs to be solved here. Let what you named settle.",
+        "The space between naming and understanding is where wisdom grows.",
+        "Breathe. You don't have to figure everything out right now.",
+        "What feels heavy deserves to be held gently before it's understood."
+    ],
+
+    generateInsights(data, mode = 'gentle') {
+        const text = data.primary?.toLowerCase() || '';
+        const isTeamRelated = text.includes('team') || text.includes('collaborat') || text.includes('together');
+        const isGrowthRelated = text.includes('growth') || text.includes('scale') || text.includes('expand');
+        const isResourceRelated = text.includes('resource') || text.includes('budget') || text.includes('money');
+        
+        if (mode === 'gentle') {
+            // Gentle Understanding - child-clear language
+            let subsurface = "Often, when something feels stuck on the surface, it's because different parts of life are pulling in different directions at the same time.";
+            let tension = "Stability ↔ Possibility";
+            let leverage = "This might not be about working harder, but finding the smallest place where change would make everything else feel lighter.";
+            let future = "You're learning how to lead through difficulty — which builds a kind of wisdom that can't be taught.";
+            let strengths = "You have care, commitment, and skill. The issue is rarely about capability.";
+            let release = "Some weights were never meant to be held by one person. Blame, urgency, or the belief that this struggle defines your worth.";
+            
+            if (isTeamRelated) {
+                subsurface = "When working together feels hard, it's often because people are trying to care for different things at the same time.";
+                tension = "Belonging ↔ Boundaries";
+                leverage = "Sometimes one clear, kind conversation can change how everything feels together.";
+                strengths = "You care about connection. That's a strength, not a weakness.";
+            }
+            
+            if (isGrowthRelated) {
+                subsurface = "Growth asks us to become someone new while still being who we are. That tension is real.";
+                tension = "Safety ↔ Expansion";
+                leverage = "One small, true step forward often matters more than a big perfect plan.";
+                strengths = "You're willing to grow. That takes courage every day.";
+            }
+            
+            if (isResourceRelated) {
+                subsurface = "You're trying to create value in a world where resources feel limited. That's not personal failure — it's a mismatch between effort and support.";
+                tension = "Necessity ↔ Creativity";
+                leverage = "This might not be about 'more' but about finding one way to reach people who already value what you offer.";
+                strengths = "You know how to make things work. That's a quiet superpower.";
+            }
+            
+            return { subsurface, tension, leverage, future, strengths, release };
+        } else {
+            // Deeper Insight - systems language
+            let subsurface = "Executive challenges often reveal structural misalignments between intention, capacity, and system design.";
+            let tension = "Operational Excellence ↔ Strategic Transformation";
+            let leverage = "Identify the highest-leverage intervention point where minimal energy creates maximal system-wide shift.";
+            let future = "Evolving from operator to orchestrator — designing systems that generate value beyond direct intervention.";
+            let strengths = "Systems awareness, strategic patience, capacity for complexity";
+            let release = "The heroic leadership model — the belief that you must personally solve every systemic challenge.";
+            
+            if (isTeamRelated) {
+                subsurface = "Team dynamics surface misconfigured feedback loops and unclear accountability structures.";
+                tension = "Psychological Safety ↔ Performance Accountability";
+                leverage = "Redesign decision rights and information flows to match strategic priorities.";
+            }
+            
+            if (isGrowthRelated) {
+                subsurface = "Growth plateaus often indicate capability-inertia gaps in the organizational learning system.";
+                tension = "Exploitation of Current Assets ↔ Exploration of New Capabilities";
+                leverage = "Create protected space for experimental learning while maintaining core operational integrity.";
+            }
+            
+            if (isResourceRelated) {
+                subsurface = "Resource constraints expose misaligned value capture mechanisms in the business model.";
+                tension = "Resource Efficiency ↔ Strategic Investment";
+                leverage = "Reconfigure value streams to better align effort, value creation, and compensation.";
+            }
+            
+            return { subsurface, tension, leverage, future, strengths, release };
+        }
+    },
+
+    generateArtefact(data, insights) {
+        // Sacred artefacts - not random, but meaningful
+        const truths = [
+            "You are not failing — you are navigating without support.",
+            "What feels like resistance is often growth in disguise.",
+            "The wisdom you need is already within you, waiting to be heard.",
+            "Complexity is not your enemy — it's the raw material of your leadership.",
+            "You don't have to carry this alone."
+        ];
+        
+        const commitments = [
+            "I will lead from curiosity, not certainty.",
+            "I will trust my own pace and process.",
+            "I will listen to what wants to emerge, not just what I want to happen.",
+            "I will release the need to have all the answers.",
+            "I will honor both action and stillness as forms of leadership."
+        ];
+        
+        return {
+            sentenceOfTruth: truths[Math.floor(Math.random() * truths.length)],
+            patternToRelease: insights.release,
+            strengthToKeep: insights.strengths,
+            gentleCommitment: commitments[Math.floor(Math.random() * commitments.length)],
+            date: new Date().toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            })
+        };
+    },
+
+    nextScreen() {
+        const i = this.screens.indexOf(this.currentScreen);
+        if (i < this.screens.length - 1) {
+            if (this.currentScreen === 'secondary') {
+                // Generate insights based on current mode
+                this.insights = this.generateInsights(this.sessionData, this.insightMode);
+            } else if (this.currentScreen === 'insights') {
+                // Generate artefact after insights
+                this.artefact = this.generateArtefact(this.sessionData, this.insights);
+            }
+            this.currentScreen = this.screens[i + 1];
+            this.render();
+        }
+    },
+
+    prevScreen() {
+        const i = this.screens.indexOf(this.currentScreen);
+        if (i > 0) {
+            this.currentScreen = this.screens[i - 1];
+            this.render();
+        }
+    },
+
+    toggleInsightMode() {
+        this.insightMode = this.insightMode === 'gentle' ? 'deep' : 'gentle';
+        // Regenerate insights with new mode
+        this.insights = this.generateInsights(this.sessionData, this.insightMode);
+        this.render();
+    },
+
+    renderWelcome() {
+        return `
+        <div class="min-h-screen flex flex-col justify-center items-center fade-in">
+            <div class="text-center max-w-2xl">
+                <div class="candle-glow mx-auto mb-10 flex items-center justify-center">
+                    <i class="fas fa-candle-holder text-amber-700 text-3xl"></i>
+                </div>
+                
+                <h1 class="text-4xl md:text-5xl font-serif font-bold mb-8 text-amber-900">
+                    Sanctuary for Leaders
+                </h1>
+                
+                <p class="text-xl text-amber-800 mb-10 leading-relaxed">
+                    A quiet space to name what feels heavy — and to see it more clearly.<br>
+                    There is nothing to fix yet.
+                </p>
+                
+                <button onclick="sanctuaryTool.nextScreen()"
+                    class="px-12 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    Begin gently
+                </button>
+                
+                <p class="mt-10 text-amber-700 text-sm">
+                    Takes about 7 minutes • Your words stay private
+                </p>
+            </div>
+        </div>`;
+    },
+
+    renderContext() {
+        const sector = this.sessionData.sector || '';
+        const role = this.sessionData.role || '';
+        
+        return `
+        <div class="slide-up pt-10">
+            <div class="mb-12">
+                <h1 class="text-3xl font-serif font-bold mb-2 text-amber-900">Understanding Your Landscape</h1>
+                <p class="text-amber-700">
+                    This helps us understand the world you're standing in — not who you are.
+                </p>
+            </div>
+            
+            <div class="space-y-10">
+                <div>
+                    <label class="block text-sm font-medium text-amber-800 mb-3">Sector / Work Context</label>
+                    <input type="text" id="sector" value="${sector}"
+                        class="w-full px-6 py-5 border-2 border-amber-200 rounded-2xl bg-amber-50/50 focus:border-amber-400 focus:outline-none"
+                        placeholder="Where you work...">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-amber-800 mb-3">What You're Carrying Responsibility For</label>
+                    <input type="text" id="role" value="${role}"
+                        class="w-full px-6 py-5 border-2 border-amber-200 rounded-2xl bg-amber-50/50 focus:border-amber-400 focus:outline-none"
+                        placeholder="Your role, or what you're responsible for...">
+                </div>
+            </div>
+            
+            <div class="flex gap-6 mt-20">
+                <button onclick="sanctuaryTool.prevScreen()"
+                    class="px-8 py-4 border-2 border-amber-300 text-amber-700 rounded-2xl flex-1 hover:bg-amber-50">
+                    Back
+                </button>
+                <button onclick="sanctuaryTool.saveContext()"
+                    class="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-2xl flex-1 hover:shadow-lg">
+                    Continue
+                </button>
+            </div>
+        </div>`;
+    },
+
+    saveContext() {
+        const sector = document.getElementById('sector').value;
+        const role = document.getElementById('role').value;
+        
+        if (!sector.trim() || !role.trim()) {
+            alert('Please share a little about your context so we can understand your landscape.');
+            return;
+        }
+        
+        this.sessionData.sector = sector;
+        this.sessionData.role = role;
+        this.nextScreen();
+    },
+
+    renderPrimary() {
+        const value = this.sessionData.primary || '';
+        
+        return `
+        <div class="slide-up pt-10">
+            <div class="mb-12">
+                <h1 class="text-3xl font-serif font-bold mb-4 text-amber-900">What feels heavy right now?</h1>
+                <p class="text-amber-700 text-lg">
+                    Say it in your own words. This is not a performance.
+                </p>
+            </div>
+
+            <textarea id="primary" rows="6"
+                class="w-full px-6 py-5 border-2 border-amber-200 rounded-2xl bg-amber-50/50 text-lg focus:border-amber-400 focus:outline-none"
+                placeholder="What's weighing on you? What feels difficult or stuck?">${value}</textarea>
+            
+            <div class="mt-6 text-sm text-amber-600 flex justify-between">
+                <span>Just say it like you'd tell a friend</span>
+                <span id="charCount">${value.length}</span>
+            </div>
+
+            <div class="flex gap-6 mt-16">
+                <button onclick="sanctuaryTool.prevScreen()"
+                    class="px-8 py-4 border-2 border-amber-300 text-amber-700 rounded-2xl flex-1 hover:bg-amber-50">
+                    Back
+                </button>
+                <button onclick="sanctuaryTool.savePrimary()"
+                    class="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-2xl flex-1 hover:shadow-lg">
+                    This is what feels heavy
+                </button>
+            </div>
+        </div>`;
+    },
+
+    savePrimary() {
+        const text = document.getElementById('primary').value;
+        if (text.length < 10) {
+            alert('Please share a little more so we can understand what you're carrying.');
+            return;
+        }
+        this.sessionData.primary = text;
+        this.nextScreen();
+    },
+
+    renderSecondary() {
+        const value = this.sessionData.secondary || '';
+        
+        return `
+        <div class="slide-up pt-10">
+            <div class="mb-12">
+                <h1 class="text-3xl font-serif font-bold mb-4 text-amber-900">What makes this harder?</h1>
+                <p class="text-amber-700 text-lg">
+                    This might be practical, emotional, or structural. What adds to the weight?
+                </p>
+            </div>
+
+            <textarea id="secondary" rows="6"
+                class="w-full px-6 py-5 border-2 border-amber-200 rounded-2xl bg-amber-50/50 text-lg focus:border-amber-400 focus:outline-none"
+                placeholder="What else is happening? What else feels difficult?">${value}</textarea>
+            
+            <div class="mt-6 text-sm text-amber-600 flex justify-between">
+                <span>What else should we understand?</span>
+                <span id="charCount2">${value.length}</span>
+            </div>
+
+            <div class="flex gap-6 mt-16">
+                <button onclick="sanctuaryTool.prevScreen()"
+                    class="px-8 py-4 border-2 border-amber-300 text-amber-700 rounded-2xl flex-1 hover:bg-amber-50">
+                    Back
+                </button>
+                <button onclick="sanctuaryTool.saveSecondary()"
+                    class="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-2xl flex-1 hover:shadow-lg">
+                    Enter the Sanctuary
+                </button>
+            </div>
+        </div>`;
+    },
+
+    saveSecondary() {
+        const text = document.getElementById('secondary').value;
+        this.sessionData.secondary = text;
+        this.nextScreen();
+    },
+
+    renderSanctuary() {
+        const reflection = this.reflections[Math.floor(Math.random() * this.reflections.length)];
+        
+        return `
+        <div class="fade-in min-h-screen flex flex-col justify-center items-center">
+            <div class="text-center max-w-2xl">
+                <div class="breathing-circle mx-auto mb-10 flex items-center justify-center">
+                    <i class="fas fa-leaf text-3xl text-emerald-600"></i>
+                </div>
+                
+                <h1 class="text-3xl font-serif font-bold mb-8 text-emerald-800">Sanctuary</h1>
+                
+                <div class="gentle-card p-10 rounded-2xl shadow-sm mb-10 backdrop-blur-sm">
+                    <p class="text-2xl text-emerald-900 italic leading-relaxed mb-8">
+                        "${reflection}"
+                    </p>
+                    
+                    <div class="flex items-center justify-center space-x-4 text-emerald-700">
+                        <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+                        <span>Breathe with me</span>
+                        <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+                    </div>
+                </div>
+                
+                <p class="text-emerald-700 mb-12 max-w-md mx-auto">
+                    You've named what matters. Before we make sense of it, let's pause.<br>
+                    Nothing needs to be solved here.
+                </p>
+                
+                <div class="flex gap-6 justify-center">
+                    <button onclick="sanctuaryTool.prevScreen()"
+                        class="px-8 py-4 border-2 border-emerald-300 text-emerald-700 rounded-2xl hover:bg-emerald-50">
+                        Back to what I shared
+                    </button>
+                    <button onclick="sanctuaryTool.nextScreen()"
+                        class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-2xl hover:shadow-lg">
+                        Receive Understanding
+                    </button>
+                </div>
+            </div>
+        </div>`;
+    },
+
+    renderInsights() {
+        if (!this.insights) {
+            this.insights = this.generateInsights(this.sessionData, this.insightMode);
+        }
+        
+        const isGentle = this.insightMode === 'gentle';
+        const cardClass = isGentle ? 'gentle-card' : 'deep-card';
+        const titleColor = isGentle ? 'text-amber-800' : 'text-indigo-800';
+        const subtitleColor = isGentle ? 'text-amber-600' : 'text-indigo-600';
+        const bgColor = isGentle ? 'bg-amber-50/50' : 'bg-indigo-50/50';
+        
+        return `
+        <div class="fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-serif font-bold mb-4 ${titleColor}">
+                    ${isGentle ? 'Gentle Understanding' : 'Deeper Insight'}
+                </h1>
+                <p class="${subtitleColor} mb-6">
+                    ${isGentle 
+                        ? 'Perspectives to help you see differently, not solve immediately' 
+                        : 'Systemic perspectives for strategic reflection'}
+                </p>
+                
+                <!-- Toggle Switch -->
+                <div class="flex items-center justify-center gap-4 mb-10">
+                    <span class="${isGentle ? 'font-semibold text-amber-700' : 'text-amber-600'}">Gentle Understanding</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" ${this.insightMode === 'deep' ? 'checked' : ''} onchange="sanctuaryTool.toggleInsightMode()">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="${!isGentle ? 'font-semibold text-indigo-700' : 'text-indigo-600'}">Deeper Insight</span>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 ${bgColor} p-8 rounded-2xl">
+                <div class="${cardClass} p-8 rounded-2xl">
+                    <div class="${isGentle ? 'text-amber-700' : 'text-indigo-700'} text-sm font-semibold mb-3">
+                        ${isGentle ? 'What might really be going on underneath' : 'Subsurface Pattern'}
+                    </div>
+                    <p class="text-lg">${this.insights.subsurface}</p>
+                </div>
+                
+                <div class="${cardClass} p-8 rounded-2xl">
+                    <div class="${isGentle ? 'text-amber-700' : 'text-indigo-700'} text-sm font-semibold mb-3">
+                        ${isGentle ? 'The tension you\'re standing inside' : 'Core Tension'}
+                    </div>
+                    <p class="text-2xl font-bold ${isGentle ? 'text-amber-900' : 'text-indigo-900'}">${this.insights.tension}</p>
+                    <p class="mt-3 text-gray-600">
+                        ${isGentle 
+                            ? 'Many challenges aren\'t problems to remove — they\'re tensions to hold. Both sides matter.' 
+                            : 'Structural tension requiring conscious navigation, not resolution'}
+                    </p>
+                </div>
+                
+                <div class="${cardClass} p-8 rounded-2xl">
+                    <div class="${isGentle ? 'text-amber-700' : 'text-indigo-700'} text-sm font-semibold mb-3">
+                        ${isGentle ? 'Where a small shift could help most' : 'Leverage Point'}
+                    </div>
+                    <p class="text-lg">${this.insights.leverage}</p>
+                </div>
+                
+                <div class="${cardClass} p-8 rounded-2xl">
+                    <div class="${isGentle ? 'text-amber-700' : 'text-indigo-700'} text-sm font-semibold mb-3">
+                        ${isGentle ? 'Who you are becoming through this' : 'Evolving Identity'}
+                    </div>
+                    <p class="text-lg">${this.insights.future}</p>
+                </div>
+                
+                <div class="${cardClass} p-8 rounded-2xl">
+                    <div class="${isGentle ? 'text-amber-700' : 'text-indigo-700'} text-sm font-semibold mb-3">
+                        ${isGentle ? 'Something you already have' : 'Strengths to Amplify'}
+                    </div>
+                    <p class="text-lg">${this.insights.strengths}</p>
+                </div>
+                
+                <div class="${cardClass} p-8 rounded-2xl">
+                    <div class="${isGentle ? 'text-amber-700' : 'text-indigo-700'} text-sm font-semibold mb-3">
+                        ${isGentle ? 'Something you don\'t need to carry alone' : 'Patterns to Release'}
+                    </div>
+                    <p class="text-lg">${this.insights.release}</p>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <p class="${subtitleColor} mb-8 max-w-2xl mx-auto">
+                    ${isGentle
+                        ? 'These perspectives are invitations to see differently, not instructions to act immediately.'
+                        : 'Systemic insights are thought-starters for strategic reflection, not directives for action.'}
+                </p>
+                
+                <div class="flex gap-6 justify-center">
+                    <button onclick="sanctuaryTool.prevScreen()"
+                        class="px-8 py-4 border-2 ${isGentle ? 'border-amber-300 text-amber-700' : 'border-indigo-300 text-indigo-700'} rounded-2xl hover:${isGentle ? 'bg-amber-50' : 'bg-indigo-50'}">
+                        Back to Sanctuary
+                    </button>
+                    <button onclick="sanctuaryTool.nextScreen()"
+                        class="px-8 py-4 bg-gradient-to-r ${isGentle ? 'from-amber-500 to-amber-600' : 'from-indigo-500 to-indigo-600'} text-white font-semibold rounded-2xl hover:shadow-lg">
+                        Create Your Artefact
+                    </button>
+                </div>
+            </div>
+        </div>`;
+    },
+
+    renderArtefact() {
+        if (!this.artefact) {
+            this.artefact = this.generateArtefact(this.sessionData, this.insights);
+        }
+        
+        return `
+        <div class="fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-serif font-bold mb-4 text-emerald-900">Your Personal Artefact</h1>
+                <p class="text-emerald-700">Insight fades. Artefacts stay.</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-amber-50 to-emerald-50 border-2 border-amber-200 p-12 rounded-3xl shadow-xl mb-12 max-w-2xl mx-auto relative overflow-hidden">
+                <!-- Watermark effect -->
+                <div class="absolute top-4 right-4 text-amber-200 text-6xl opacity-20">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                
+                <div class="text-center mb-12 relative z-10">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r from-amber-200 to-emerald-200 flex items-center justify-center">
+                        <i class="fas fa-scroll text-3xl text-amber-700"></i>
+                    </div>
+                    <p class="text-amber-800 text-sm font-semibold tracking-widest">SACRED KEEP • ${this.artefact.date}</p>
+                </div>
+                
+                <div class="space-y-12 relative z-10">
+                    <div class="border-b border-amber-300 pb-12">
+                        <div class="text-emerald-700 text-sm font-semibold mb-4 tracking-wider">ONE SENTENCE OF TRUTH</div>
+                        <p class="text-3xl font-serif text-amber-900 leading-tight">"${this.artefact.sentenceOfTruth}"</p>
+                    </div>
+                    
+                    <div class="border-b border-amber-300 pb-12">
+                        <div class="text-emerald-700 text-sm font-semibold mb-4 tracking-wider">ONE PATTERN TO LOOSEN</div>
+                        <p class="text-2xl text-amber-800">${this.artefact.patternToRelease}</p>
+                    </div>
+                    
+                    <div class="border-b border-amber-300 pb-12">
+                        <div class="text-emerald-700 text-sm font-semibold mb-4 tracking-wider">ONE STRENGTH TO KEEP</div>
+                        <p class="text-2xl text-amber-800">${this.artefact.strengthToKeep}</p>
+                    </div>
+                    
+                    <div>
+                        <div class="text-emerald-700 text-sm font-semibold mb-4 tracking-wider">ONE GENTLE COMMITMENT</div>
+                        <p class="text-3xl font-serif text-amber-900">"${this.artefact.gentleCommitment}"</p>
+                    </div>
+                </div>
+                
+                <div class="mt-16 pt-8 border-t border-amber-300 text-center relative z-10">
+                    <p class="text-amber-600 text-sm italic">This artefact is yours. Screenshot it, write it down, or carry it in your heart.</p>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <div class="flex gap-6 justify-center">
+                    <button onclick="sanctuaryTool.prevScreen()"
+                        class="px-8 py-4 border-2 border-emerald-300 text-emerald-700 rounded-2xl hover:bg-emerald-50">
+                        Back to Understanding
+                    </button>
+                    <button onclick="sanctuaryTool.nextScreen()"
+                        class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-2xl hover:shadow-lg">
+                        Companionship
+                    </button>
+                </div>
+            </div>
+        </div>`;
+    },
+
+    renderCompanionship() {
+        return `
+        <div class="fade-in min-h-screen flex flex-col justify-center items-center">
+            <div class="text-center max-w-2xl">
+                <div class="w-24 h-24 mx-auto mb-10 rounded-full bg-gradient-to-r from-slate-700 to-slate-900 flex items-center justify-center">
+                    <i class="fas fa-hand-holding-heart text-3xl text-white"></i>
+                </div>
+                
+                <h1 class="text-3xl font-serif font-bold mb-8 text-slate-800">Human Presence</h1>
+                
+                <div class="bg-gradient-to-br from-slate-800 to-slate-900 text-white p-10 rounded-2xl shadow-2xl mb-10">
+                    <div class="flex items-center justify-center gap-4 mb-8">
+                        <div class="w-3 h-3 bg-rose-400 rounded-full animate-pulse"></div>
+                        <span class="text-slate-300">Live companionship available</span>
+                        <div class="w-3 h-3 bg-rose-400 rounded-full animate-pulse" style="animation-delay: 0.3s"></div>
+                    </div>
+                    
+                    <p class="text-2xl italic mb-10 leading-relaxed">
+                        "What you named today matters.<br>
+                        You don't have to carry it alone.<br>
+                        Trust your own wisdom as it unfolds."
+                    </p>
+                    
+                    <div class="text-center">
+                        <div class="inline-flex items-center gap-3 text-slate-300">
+                            <i class="fas fa-clock"></i>
+                            <span>90 seconds of presence</span>
+                            <i class="fas fa-heart ml-3"></i>
+                            <span>No teaching, just witnessing</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-slate-600 mb-12 max-w-md mx-auto">
+                    This is not instruction. This is companionship.<br>
+                    You have already done the important work.
+                </p>
+                
+                <button onclick="sanctuaryTool.nextScreen()"
+                    class="px-12 py-4 bg-gradient-to-r from-slate-700 to-slate-800 text-white text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                    Complete Your Journey
+                </button>
+            </div>
+        </div>`;
+    },
+
+    renderReturn() {
+        return `
+        <div class="fade-in min-h-screen flex flex-col justify-center items-center">
+            <div class="text-center max-w-2xl">
+                <div class="w-32 h-32 mx-auto mb-10 rounded-full bg-gradient-to-r from-emerald-100 to-teal-100 flex items-center justify-center">
+                    <i class="fas fa-dove text-5xl text-emerald-600"></i>
+                </div>
+                
+                <h1 class="text-4xl font-serif font-bold mb-8 text-emerald-900">Journey Complete</h1>
+                
+                <div class="gentle-card p-12 rounded-2xl shadow-sm mb-12">
+                    <p class="text-2xl text-emerald-800 mb-10 leading-relaxed">
+                        You have moved through naming to understanding,<br>
+                        from insight to something tangible to carry.
+                    </p>
+                    
+                    <div class="space-y-6 text-emerald-700">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-emerald-500 text-xl mr-4"></i>
+                            <span class="text-lg">You named what feels heavy</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-emerald-500 text-xl mr-4"></i>
+                            <span class="text-lg">You paused in sanctuary</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-emerald-500 text-xl mr-4"></i>
+                            <span class="text-lg">You received understanding</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-emerald-500 text-xl mr-4"></i>
+                            <span class="text-lg">You created a sacred artefact</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-emerald-500 text-xl mr-4"></i>
+                            <span class="text-lg">You felt human companionship</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-emerald-700 mb-12 max-w-lg mx-auto">
+                    Return when you're ready for your next reflection.<br>
+                    Your wisdom is always welcome here.
+                </p>
+                
+                <button onclick="sanctuaryTool.startOver()"
+                    class="px-12 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    Return When Ready
+                </button>
+                
+                <p class="mt-12 text-emerald-600 text-sm italic">
+                    The work is complete. The integration continues.
+                </p>
+            </div>
+        </div>`;
+    },
+
+    startOver() {
+        this.currentScreen = 'welcome';
+        this.sessionData = {};
+        this.insights = null;
+        this.artefact = null;
+        this.insightMode = 'gentle';
+        this.render();
+    },
+
+    render() {
+        const app = document.getElementById('app');
+        switch(this.currentScreen) {
+            case 'welcome':
+                app.innerHTML = this.renderWelcome();
+                break;
+            case 'context':
+                app.innerHTML = this.renderContext();
+                break;
+            case 'primary':
+                app.innerHTML = this.renderPrimary();
+                break;
+            case 'secondary':
+                app.innerHTML = this.renderSecondary();
+                break;
+            case 'sanctuary':
+                app.innerHTML = this.renderSanctuary();
+                break;
+            case 'insights':
+                app.innerHTML = this.renderInsights();
+                break;
+            case 'artefact':
+                app.innerHTML = this.renderArtefact();
+                break;
+            case 'companionship':
+                app.innerHTML = this.renderCompanionship();
+                break;
+            case 'return':
+                app.innerHTML = this.renderReturn();
+                break;
+        }
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    sanctuaryTool.render();
+});
+</script>
+</body>
+</html>
