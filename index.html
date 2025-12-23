@@ -91,6 +91,11 @@
 </head>
 
 <body class="text-gray-800">
+<!-- DIAGNOSTIC TEXT - You should see this if page loads -->
+<p style="color:black; background:white; padding:5px; position:fixed; top:0; left:0; z-index:9999; font-weight:bold;">
+    ✅ If you see this, the page loaded.
+</p>
+
 <div id="app" class="max-w-4xl mx-auto p-4 min-h-screen"></div>
 
 <script>
@@ -99,10 +104,9 @@ const sanctuaryTool = {
     sessionData: {},
     insights: null,
     artefact: null,
-    insightMode: 'gentle', // 'gentle' or 'deep'
+    insightMode: 'gentle',
     screens: ['welcome', 'context', 'primary', 'secondary', 'sanctuary', 'insights', 'artefact', 'companionship', 'return'],
     
-    // Sanctuary reflections
     reflections: [
         "You've said something that matters. Before we make sense of it, let's pause.",
         "Nothing needs to be solved here. Let what you named settle.",
@@ -118,7 +122,6 @@ const sanctuaryTool = {
         const isResourceRelated = text.includes('resource') || text.includes('budget') || text.includes('money');
         
         if (mode === 'gentle') {
-            // Gentle Understanding - child-clear language
             let subsurface = "Often, when something feels stuck on the surface, it's because different parts of life are pulling in different directions at the same time.";
             let tension = "Stability ↔ Possibility";
             let leverage = "This might not be about working harder, but finding the smallest place where change would make everything else feel lighter.";
@@ -149,7 +152,6 @@ const sanctuaryTool = {
             
             return { subsurface, tension, leverage, future, strengths, release };
         } else {
-            // Deeper Insight - systems language
             let subsurface = "Executive challenges often reveal structural misalignments between intention, capacity, and system design.";
             let tension = "Operational Excellence ↔ Strategic Transformation";
             let leverage = "Identify the highest-leverage intervention point where minimal energy creates maximal system-wide shift.";
@@ -180,7 +182,6 @@ const sanctuaryTool = {
     },
 
     generateArtefact(data, insights) {
-        // Sacred artefacts - not random, but meaningful
         const truths = [
             "You are not failing — you are navigating without support.",
             "What feels like resistance is often growth in disguise.",
@@ -215,10 +216,8 @@ const sanctuaryTool = {
         const i = this.screens.indexOf(this.currentScreen);
         if (i < this.screens.length - 1) {
             if (this.currentScreen === 'secondary') {
-                // Generate insights based on current mode
                 this.insights = this.generateInsights(this.sessionData, this.insightMode);
             } else if (this.currentScreen === 'insights') {
-                // Generate artefact after insights
                 this.artefact = this.generateArtefact(this.sessionData, this.insights);
             }
             this.currentScreen = this.screens[i + 1];
@@ -236,7 +235,6 @@ const sanctuaryTool = {
 
     toggleInsightMode() {
         this.insightMode = this.insightMode === 'gentle' ? 'deep' : 'gentle';
-        // Regenerate insights with new mode
         this.insights = this.generateInsights(this.sessionData, this.insightMode);
         this.render();
     },
@@ -246,7 +244,8 @@ const sanctuaryTool = {
         <div class="min-h-screen flex flex-col justify-center items-center fade-in">
             <div class="text-center max-w-2xl">
                 <div class="candle-glow mx-auto mb-10 flex items-center justify-center">
-                    <i class="fas fa-candle-holder text-amber-700 text-3xl"></i>
+                    <!-- FIXED: Changed fa-candle-holder to fa-candle -->
+                    <i class="fas fa-candle text-amber-700 text-3xl"></i>
                 </div>
                 
                 <h1 class="text-4xl md:text-5xl font-serif font-bold mb-8 text-amber-900">
@@ -363,7 +362,7 @@ const sanctuaryTool = {
     savePrimary() {
         const text = document.getElementById('primary').value;
         if (text.length < 10) {
-            alert('Please share a little more so we can understand what you're carrying.');
+            alert("Please share a little more so we can understand what you're carrying.");
             return;
         }
         this.sessionData.primary = text;
@@ -476,7 +475,6 @@ const sanctuaryTool = {
                         : 'Systemic perspectives for strategic reflection'}
                 </p>
                 
-                <!-- Toggle Switch -->
                 <div class="flex items-center justify-center gap-4 mb-10">
                     <span class="${isGentle ? 'font-semibold text-amber-700' : 'text-amber-600'}">Gentle Understanding</span>
                     <label class="toggle-switch">
@@ -570,7 +568,6 @@ const sanctuaryTool = {
             </div>
             
             <div class="bg-gradient-to-br from-amber-50 to-emerald-50 border-2 border-amber-200 p-12 rounded-3xl shadow-xl mb-12 max-w-2xl mx-auto relative overflow-hidden">
-                <!-- Watermark effect -->
                 <div class="absolute top-4 right-4 text-amber-200 text-6xl opacity-20">
                     <i class="fas fa-seedling"></i>
                 </div>
@@ -776,4 +773,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-
