@@ -1,64 +1,121 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanctuary for Leaders</title>
+    <title>Future Self Intervention</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Georgia&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #fdf6e3 0%, #f5e8d0 100%);
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(135deg, #e8e8ea 0%, #d4d4d8 20%, #e4d5e0 60%, #f0e6ef 100%);
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
         }
-        .font-serif { font-family: 'Georgia', serif; }
-        .fade-in { animation: fadeIn 0.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .slide-up { animation: slideUp 0.4s ease-out; }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .gentle-card {
-            background: linear-gradient(145deg, #ffffff 0%, #faf5e4 100%);
-            border: 1px solid #e9d8a6;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(216, 180, 216, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(255, 192, 203, 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
-        .deep-card {
-            background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
-            border: 1px solid #ced4da;
+        .font-serif { font-family: 'Cormorant Garamond', serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
         }
-        .candle-glow {
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, #fff8e1 0%, #ffecb3 70%, #ffd54f 100%);
+        .glass-card-dark {
+            background: rgba(100, 100, 120, 0.25);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+        }
+        .fade-in { animation: fadeIn 1.2s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-up { animation: slideUp 0.8s ease-out forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        .glow-orb {
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, rgba(216, 180, 216, 0.6) 0%, rgba(255, 192, 203, 0.3) 50%, transparent 70%);
             border-radius: 50%;
-            animation: glow 3s infinite alternate;
-            box-shadow: 0 0 60px 20px rgba(255, 214, 79, 0.3);
+            animation: pulse 4s ease-in-out infinite;
+            filter: blur(40px);
         }
-        @keyframes glow {
-            0% { box-shadow: 0 0 40px 15px rgba(255, 214, 79, 0.2); }
-            100% { box-shadow: 0 0 80px 30px rgba(255, 214, 79, 0.4); }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 0.8; }
         }
         .breathing-circle {
-            width: 140px;
-            height: 140px;
-            border: 2px solid #d4a574;
-            animation: breathe 8s infinite ease-in-out;
+            width: 180px;
+            height: 180px;
+            border: 2px solid rgba(216, 180, 216, 0.5);
+            animation: breathe 6s infinite ease-in-out;
         }
         @keyframes breathe {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.1); opacity: 1; }
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.15); opacity: 1; }
+        }
+        .luxury-button {
+            background: linear-gradient(135deg, #d8b4d8 0%, #dda0dd 100%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .luxury-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+        .luxury-button:hover::before { left: 100%; }
+        .luxury-button:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(216, 180, 216, 0.4); }
+        .luxury-button-secondary {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(216, 180, 216, 0.4);
+            transition: all 0.3s ease;
+        }
+        .luxury-button-secondary:hover {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(216, 180, 216, 0.6);
+            transform: translateY(-2px);
+        }
+        .luxury-input {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(216, 180, 216, 0.3);
+            transition: all 0.3s ease;
+        }
+        .luxury-input:focus {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(216, 180, 216, 0.6);
+            outline: none;
+            box-shadow: 0 4px 20px rgba(216, 180, 216, 0.2);
         }
         .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 34px;
+            width: 64px;
+            height: 36px;
         }
-        .toggle-switch input { 
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
         .slider {
             position: absolute;
             cursor: pointer;
@@ -66,9 +123,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #e9d8a6;
+            background: rgba(216, 180, 216, 0.3);
             transition: .4s;
-            border-radius: 34px;
+            border-radius: 36px;
+            border: 1.5px solid rgba(216, 180, 216, 0.4);
         }
         .slider:before {
             position: absolute;
@@ -76,27 +134,41 @@
             height: 26px;
             width: 26px;
             left: 4px;
-            bottom: 4px;
-            background-color: white;
+            bottom: 3px;
+            background: white;
             transition: .4s;
             border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-        input:checked + .slider {
-            background-color: #4f46e5;
+        input:checked + .slider { background: linear-gradient(135deg, #d8b4d8 0%, #dda0dd 100%); }
+        input:checked + .slider:before { transform: translateX(28px); }
+        .floating { animation: floating 3s ease-in-out infinite; }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
-        input:checked + .slider:before {
-            transform: translateX(26px);
+        #app { position: relative; z-index: 1; }
+        .gradient-text {
+            background: linear-gradient(135deg, #6b4c6b 0%, #9b6b9b 50%, #d8b4d8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .text-shadow-soft { text-shadow: 0 2px 20px rgba(107, 76, 107, 0.15); }
+        .insight-card-enter { animation: cardEnter 0.8s ease-out forwards; }
+        @keyframes cardEnter {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .insight-text-reveal { animation: textReveal 1.2s ease-out forwards; }
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-
-<body class="text-gray-800">
-<!-- DIAGNOSTIC TEXT - You should see this if page loads -->
-<p style="color:black; background:white; padding:5px; position:fixed; top:0; left:0; z-index:9999; font-weight:bold;">
-    ✅ If you see this, the page loaded.
-</p>
-
-<div id="app" class="max-w-4xl mx-auto p-4 min-h-screen"></div>
+<body>
+<div id="app" class="max-w-5xl mx-auto p-6 min-h-screen"></div>
 
 <script>
 const sanctuaryTool = {
@@ -105,10 +177,21 @@ const sanctuaryTool = {
     insights: null,
     artefact: null,
     insightMode: 'gentle',
+    currentInsightIndex: 0, // Track which insight we're showing
     screens: ['welcome', 'context', 'primary', 'secondary', 'sanctuary', 'insights', 'artefact', 'companionship', 'return'],
     
+    // Insight categories for sequential display
+    insightCategories: [
+        { key: 'subsurface', title: 'What might really be underneath', gentle: 'What might really be going on underneath', strategic: 'Subsurface Pattern' },
+        { key: 'tension', title: 'The tension you\'re standing inside', gentle: 'The tension you\'re standing inside', strategic: 'Core Tension' },
+        { key: 'leverage', title: 'Where a small shift could help most', gentle: 'Where a small shift could help most', strategic: 'Leverage Point' },
+        { key: 'future', title: 'Who you are becoming through this', gentle: 'Who you are becoming through this', strategic: 'Evolving Identity' },
+        { key: 'strengths', title: 'Something you already have', gentle: 'Something you already have', strategic: 'Strengths to Amplify' },
+        { key: 'release', title: 'Something you don\'t need to carry alone', gentle: 'Something you don\'t need to carry alone', strategic: 'Patterns to Release' }
+    ],
+    
     reflections: [
-        "You've said something that matters. Before we make sense of it, let's pause.",
+        "You've named something that matters. Before we make sense of it, let's pause.",
         "Nothing needs to be solved here. Let what you named settle.",
         "The space between naming and understanding is where wisdom grows.",
         "Breathe. You don't have to figure everything out right now.",
@@ -217,8 +300,18 @@ const sanctuaryTool = {
         if (i < this.screens.length - 1) {
             if (this.currentScreen === 'secondary') {
                 this.insights = this.generateInsights(this.sessionData, this.insightMode);
+                this.currentInsightIndex = 0; // Reset to first insight
             } else if (this.currentScreen === 'insights') {
-                this.artefact = this.generateArtefact(this.sessionData, this.insights);
+                // Only go to artefact if we've seen all insights
+                if (this.currentInsightIndex >= this.insightCategories.length - 1) {
+                    this.artefact = this.generateArtefact(this.sessionData, this.insights);
+                    this.currentScreen = this.screens[this.screens.indexOf('insights') + 1];
+                } else {
+                    // Show next insight
+                    this.currentInsightIndex++;
+                }
+                this.render();
+                return;
             }
             this.currentScreen = this.screens[i + 1];
             this.render();
@@ -228,85 +321,97 @@ const sanctuaryTool = {
     prevScreen() {
         const i = this.screens.indexOf(this.currentScreen);
         if (i > 0) {
+            if (this.currentScreen === 'insights' && this.currentInsightIndex > 0) {
+                // Go to previous insight
+                this.currentInsightIndex--;
+                this.render();
+                return;
+            }
             this.currentScreen = this.screens[i - 1];
             this.render();
         }
     },
 
     toggleInsightMode() {
-        this.insightMode = this.insightMode === 'gentle' ? 'deep' : 'gentle';
+        this.insightMode = this.insightMode === 'gentle' ? 'strategic' : 'gentle';
         this.insights = this.generateInsights(this.sessionData, this.insightMode);
+        this.currentInsightIndex = 0; // Reset to first insight when toggling
         this.render();
     },
 
+    // Keep Claude's beautiful welcome screen
     renderWelcome() {
         return `
-        <div class="min-h-screen flex flex-col justify-center items-center fade-in">
-            <div class="text-center max-w-2xl">
-                <div class="candle-glow mx-auto mb-10 flex items-center justify-center">
-                    <!-- FIXED: Changed fa-candle-holder to fa-candle -->
-                    <i class="fas fa-candle text-amber-700 text-3xl"></i>
+        <div class="min-h-screen flex flex-col justify-center items-center fade-in py-12">
+            <div class="text-center max-w-3xl px-6">
+                <div class="relative mb-12">
+                    <div class="glow-orb mx-auto absolute left-1/2 -translate-x-1/2"></div>
+                    <div class="breathing-circle mx-auto rounded-full flex items-center justify-center relative z-10 glass-card-dark">
+                        <i class="fas fa-spa text-5xl text-purple-200 floating"></i>
+                    </div>
                 </div>
-                
-                <h1 class="text-4xl md:text-5xl font-serif font-bold mb-8 text-amber-900">
-                    Sanctuary for Leaders
+                <h1 class="text-6xl md:text-7xl font-serif font-light mb-6 gradient-text text-shadow-soft">
+                    Future Self
                 </h1>
-                
-                <p class="text-xl text-amber-800 mb-10 leading-relaxed">
-                    A quiet space to name what feels heavy — and to see it more clearly.<br>
-                    There is nothing to fix yet.
+                <h2 class="text-3xl md:text-4xl font-serif font-light mb-10 text-gray-600">
+                    Intervention
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed font-light px-4">
+                    A sanctuary to name what feels heavy,<br class="hidden md:block">
+                    and discover the wisdom already within you.
                 </p>
-                
                 <button onclick="sanctuaryTool.nextScreen()"
-                    class="px-12 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                    Begin gently
+                    class="luxury-button px-14 py-5 text-white text-xl font-medium rounded-full shadow-xl relative">
+                    Begin Your Journey
                 </button>
-                
-                <p class="mt-10 text-amber-700 text-sm">
-                    Takes about 7 minutes • Your words stay private
-                </p>
+                <div class="mt-12 flex items-center justify-center gap-8 text-gray-500 text-sm">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-clock"></i>
+                        <span>7 minutes</span>
+                    </div>
+                    <div class="w-1 h-1 rounded-full bg-gray-400"></div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-lock"></i>
+                        <span>Private & Confidential</span>
+                    </div>
+                </div>
             </div>
         </div>`;
     },
 
+    // Keep Claude's context screen
     renderContext() {
         const sector = this.sessionData.sector || '';
         const role = this.sessionData.role || '';
         
         return `
-        <div class="slide-up pt-10">
-            <div class="mb-12">
-                <h1 class="text-3xl font-serif font-bold mb-2 text-amber-900">Understanding Your Landscape</h1>
-                <p class="text-amber-700">
-                    This helps us understand the world you're standing in — not who you are.
-                </p>
-            </div>
-            
-            <div class="space-y-10">
-                <div>
-                    <label class="block text-sm font-medium text-amber-800 mb-3">Sector / Work Context</label>
-                    <input type="text" id="sector" value="${sector}"
-                        class="w-full px-6 py-5 border-2 border-amber-200 rounded-2xl bg-amber-50/50 focus:border-amber-400 focus:outline-none"
-                        placeholder="Where you work...">
+        <div class="slide-up py-12 px-4">
+            <div class="max-w-2xl mx-auto">
+                <div class="mb-12 text-center">
+                    <div class="inline-block px-6 py-2 glass-card rounded-full mb-6">
+                        <span class="text-purple-400 text-sm font-medium">Step 1 of 7</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-serif font-light mb-4 gradient-text">Understanding Your Landscape</h1>
+                    <p class="text-gray-600 text-lg font-light">Help us understand the world you're navigating</p>
                 </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-amber-800 mb-3">What You're Carrying Responsibility For</label>
-                    <input type="text" id="role" value="${role}"
-                        class="w-full px-6 py-5 border-2 border-amber-200 rounded-2xl bg-amber-50/50 focus:border-amber-400 focus:outline-none"
-                        placeholder="Your role, or what you're responsible for...">
+                <div class="glass-card rounded-3xl p-10 space-y-8">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-3 uppercase tracking-wide">Sector / Work Context</label>
+                        <input type="text" id="sector" value="${sector}"
+                            class="luxury-input w-full px-6 py-4 rounded-2xl text-lg"
+                            placeholder="E.g., Technology, Healthcare, Finance...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-3 uppercase tracking-wide">What You're Carrying Responsibility For</label>
+                        <input type="text" id="role" value="${role}"
+                            class="luxury-input w-full px-6 py-4 rounded-2xl text-lg"
+                            placeholder="Your role, position, or area of responsibility...">
+                    </div>
                 </div>
-            </div>
-            
-            <div class="flex gap-6 mt-20">
-                <button onclick="sanctuaryTool.prevScreen()"
-                    class="px-8 py-4 border-2 border-amber-300 text-amber-700 rounded-2xl flex-1 hover:bg-amber-50">
-                    Back
-                </button>
-                <button onclick="sanctuaryTool.saveContext()"
-                    class="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-2xl flex-1 hover:shadow-lg">
-                    Continue
-                </button>
+                <div class="flex gap-4 mt-10">
+                    <button onclick="sanctuaryTool.prevScreen()" class="luxury-button-secondary px-8 py-4 rounded-2xl flex-1 font-medium text-gray-700">Back</button>
+                    <button onclick="sanctuaryTool.saveContext()" class="luxury-button px-8 py-4 text-white font-medium rounded-2xl flex-1">Continue</button>
+                </div>
             </div>
         </div>`;
     },
@@ -329,32 +434,26 @@ const sanctuaryTool = {
         const value = this.sessionData.primary || '';
         
         return `
-        <div class="slide-up pt-10">
-            <div class="mb-12">
-                <h1 class="text-3xl font-serif font-bold mb-4 text-amber-900">What feels heavy right now?</h1>
-                <p class="text-amber-700 text-lg">
-                    Say it in your own words. This is not a performance.
-                </p>
-            </div>
-
-            <textarea id="primary" rows="6"
-                class="w-full px-6 py-5 border-2 border-amber-200 rounded-2xl bg-amber-50/50 text-lg focus:border-amber-400 focus:outline-none"
-                placeholder="What's weighing on you? What feels difficult or stuck?">${value}</textarea>
-            
-            <div class="mt-6 text-sm text-amber-600 flex justify-between">
-                <span>Just say it like you'd tell a friend</span>
-                <span id="charCount">${value.length}</span>
-            </div>
-
-            <div class="flex gap-6 mt-16">
-                <button onclick="sanctuaryTool.prevScreen()"
-                    class="px-8 py-4 border-2 border-amber-300 text-amber-700 rounded-2xl flex-1 hover:bg-amber-50">
-                    Back
-                </button>
-                <button onclick="sanctuaryTool.savePrimary()"
-                    class="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-2xl flex-1 hover:shadow-lg">
-                    This is what feels heavy
-                </button>
+        <div class="slide-up py-12 px-4">
+            <div class="max-w-2xl mx-auto">
+                <div class="mb-12 text-center">
+                    <div class="inline-block px-6 py-2 glass-card rounded-full mb-6">
+                        <span class="text-purple-400 text-sm font-medium">Step 2 of 7</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-serif font-light mb-4 gradient-text">What Feels Heavy?</h1>
+                    <p class="text-gray-600 text-lg font-light">Say it in your own words. This is not a performance.</p>
+                </div>
+                <div class="glass-card rounded-3xl p-10">
+                    <textarea id="primary" rows="7" class="luxury-input w-full px-6 py-5 rounded-2xl text-lg resize-none" placeholder="What's weighing on you? What feels difficult or stuck?">${value}</textarea>
+                    <div class="mt-4 flex justify-between items-center text-sm text-gray-500">
+                        <span class="font-light">Just say it like you'd tell a trusted advisor</span>
+                        <span id="charCount" class="font-medium">${value.length}</span>
+                    </div>
+                </div>
+                <div class="flex gap-4 mt-10">
+                    <button onclick="sanctuaryTool.prevScreen()" class="luxury-button-secondary px-8 py-4 rounded-2xl flex-1 font-medium text-gray-700">Back</button>
+                    <button onclick="sanctuaryTool.savePrimary()" class="luxury-button px-8 py-4 text-white font-medium rounded-2xl flex-1">Continue</button>
+                </div>
             </div>
         </div>`;
     },
@@ -373,32 +472,26 @@ const sanctuaryTool = {
         const value = this.sessionData.secondary || '';
         
         return `
-        <div class="slide-up pt-10">
-            <div class="mb-12">
-                <h1 class="text-3xl font-serif font-bold mb-4 text-amber-900">What makes this harder?</h1>
-                <p class="text-amber-700 text-lg">
-                    This might be practical, emotional, or structural. What adds to the weight?
-                </p>
-            </div>
-
-            <textarea id="secondary" rows="6"
-                class="w-full px-6 py-5 border-2 border-amber-200 rounded-2xl bg-amber-50/50 text-lg focus:border-amber-400 focus:outline-none"
-                placeholder="What else is happening? What else feels difficult?">${value}</textarea>
-            
-            <div class="mt-6 text-sm text-amber-600 flex justify-between">
-                <span>What else should we understand?</span>
-                <span id="charCount2">${value.length}</span>
-            </div>
-
-            <div class="flex gap-6 mt-16">
-                <button onclick="sanctuaryTool.prevScreen()"
-                    class="px-8 py-4 border-2 border-amber-300 text-amber-700 rounded-2xl flex-1 hover:bg-amber-50">
-                    Back
-                </button>
-                <button onclick="sanctuaryTool.saveSecondary()"
-                    class="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-2xl flex-1 hover:shadow-lg">
-                    Enter the Sanctuary
-                </button>
+        <div class="slide-up py-12 px-4">
+            <div class="max-w-2xl mx-auto">
+                <div class="mb-12 text-center">
+                    <div class="inline-block px-6 py-2 glass-card rounded-full mb-6">
+                        <span class="text-purple-400 text-sm font-medium">Step 3 of 7</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-serif font-light mb-4 gradient-text">What Makes This Harder?</h1>
+                    <p class="text-gray-600 text-lg font-light">What adds complexity or weight to this challenge?</p>
+                </div>
+                <div class="glass-card rounded-3xl p-10">
+                    <textarea id="secondary" rows="7" class="luxury-input w-full px-6 py-5 rounded-2xl text-lg resize-none" placeholder="What else is happening? What compounds the difficulty?">${value}</textarea>
+                    <div class="mt-4 flex justify-between items-center text-sm text-gray-500">
+                        <span class="font-light">What else should we understand?</span>
+                        <span id="charCount2" class="font-medium">${value.length}</span>
+                    </div>
+                </div>
+                <div class="flex gap-4 mt-10">
+                    <button onclick="sanctuaryTool.prevScreen()" class="luxury-button-secondary px-8 py-4 rounded-2xl flex-1 font-medium text-gray-700">Back</button>
+                    <button onclick="sanctuaryTool.saveSecondary()" class="luxury-button px-8 py-4 text-white font-medium rounded-2xl flex-1">Enter Sanctuary</button>
+                </div>
             </div>
         </div>`;
     },
@@ -413,209 +506,195 @@ const sanctuaryTool = {
         const reflection = this.reflections[Math.floor(Math.random() * this.reflections.length)];
         
         return `
-        <div class="fade-in min-h-screen flex flex-col justify-center items-center">
+        <div class="fade-in min-h-screen flex flex-col justify-center items-center py-12 px-4">
             <div class="text-center max-w-2xl">
-                <div class="breathing-circle mx-auto mb-10 flex items-center justify-center">
-                    <i class="fas fa-leaf text-3xl text-emerald-600"></i>
-                </div>
-                
-                <h1 class="text-3xl font-serif font-bold mb-8 text-emerald-800">Sanctuary</h1>
-                
-                <div class="gentle-card p-10 rounded-2xl shadow-sm mb-10 backdrop-blur-sm">
-                    <p class="text-2xl text-emerald-900 italic leading-relaxed mb-8">
-                        "${reflection}"
-                    </p>
-                    
-                    <div class="flex items-center justify-center space-x-4 text-emerald-700">
-                        <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
-                        <span>Breathe with me</span>
-                        <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+                <div class="relative mb-12">
+                    <div class="glow-orb mx-auto absolute left-1/2 -translate-x-1/2"></div>
+                    <div class="breathing-circle mx-auto rounded-full flex items-center justify-center relative z-10 glass-card-dark">
+                        <i class="fas fa-feather text-5xl text-purple-200 floating"></i>
                     </div>
                 </div>
-                
-                <p class="text-emerald-700 mb-12 max-w-md mx-auto">
-                    You've named what matters. Before we make sense of it, let's pause.<br>
-                    Nothing needs to be solved here.
-                </p>
-                
-                <div class="flex gap-6 justify-center">
-                    <button onclick="sanctuaryTool.prevScreen()"
-                        class="px-8 py-4 border-2 border-emerald-300 text-emerald-700 rounded-2xl hover:bg-emerald-50">
-                        Back to what I shared
-                    </button>
-                    <button onclick="sanctuaryTool.nextScreen()"
-                        class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-2xl hover:shadow-lg">
-                        Receive Understanding
-                    </button>
+                <h1 class="text-5xl font-serif font-light mb-12 gradient-text">Sanctuary</h1>
+                <div class="glass-card p-12 rounded-3xl mb-10">
+                    <p class="text-2xl md:text-3xl text-gray-700 font-serif italic leading-relaxed mb-10">"${reflection}"</p>
+                    <div class="flex items-center justify-center space-x-4 text-purple-400">
+                        <div class="w-2 h-2 bg-purple-300 rounded-full animate-pulse"></div>
+                        <span class="font-light text-gray-600">Breathe</span>
+                        <div class="w-2 h-2 bg-purple-300 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-12 max-w-md mx-auto font-light text-lg">You've named what matters. Before we make sense of it, let's pause.</p>
+                <div class="flex gap-4 justify-center flex-wrap">
+                    <button onclick="sanctuaryTool.prevScreen()" class="luxury-button-secondary px-8 py-4 rounded-2xl font-medium text-gray-700">Back</button>
+                    <button onclick="sanctuaryTool.nextScreen()" class="luxury-button px-10 py-4 text-white font-medium rounded-2xl">Receive Understanding</button>
                 </div>
             </div>
         </div>`;
     },
 
+    // NEW: Single insight at a time
     renderInsights() {
         if (!this.insights) {
             this.insights = this.generateInsights(this.sessionData, this.insightMode);
         }
         
         const isGentle = this.insightMode === 'gentle';
-        const cardClass = isGentle ? 'gentle-card' : 'deep-card';
-        const titleColor = isGentle ? 'text-amber-800' : 'text-indigo-800';
-        const subtitleColor = isGentle ? 'text-amber-600' : 'text-indigo-600';
-        const bgColor = isGentle ? 'bg-amber-50/50' : 'bg-indigo-50/50';
+        const currentCategory = this.insightCategories[this.currentInsightIndex];
+        const insightText = this.insights[currentCategory.key];
+        const isLastInsight = this.currentInsightIndex >= this.insightCategories.length - 1;
         
         return `
-        <div class="fade-in">
-            <div class="text-center mb-12">
-                <h1 class="text-4xl font-serif font-bold mb-4 ${titleColor}">
-                    ${isGentle ? 'Gentle Understanding' : 'Deeper Insight'}
-                </h1>
-                <p class="${subtitleColor} mb-6">
-                    ${isGentle 
-                        ? 'Perspectives to help you see differently, not solve immediately' 
-                        : 'Systemic perspectives for strategic reflection'}
-                </p>
-                
-                <div class="flex items-center justify-center gap-4 mb-10">
-                    <span class="${isGentle ? 'font-semibold text-amber-700' : 'text-amber-600'}">Gentle Understanding</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" ${this.insightMode === 'deep' ? 'checked' : ''} onchange="sanctuaryTool.toggleInsightMode()">
-                        <span class="slider"></span>
-                    </label>
-                    <span class="${!isGentle ? 'font-semibold text-indigo-700' : 'text-indigo-600'}">Deeper Insight</span>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 ${bgColor} p-8 rounded-2xl">
-                <div class="${cardClass} p-8 rounded-2xl">
-                    <div class="${isGentle ? 'text-amber-700' : 'text-indigo-700'} text-sm font-semibold mb-3">
-                        ${isGentle ? 'What might really be going on underneath' : 'Subsurface Pattern'}
+        <div class="fade-in py-12 px-4">
+            <div class="max-w-3xl mx-auto">
+                <!-- Progress indicator -->
+                <div class="text-center mb-10">
+                    <div class="inline-block px-6 py-2 glass-card rounded-full mb-6">
+                        <span class="text-purple-400 text-sm font-medium">Insight ${this.currentInsightIndex + 1} of ${this.insightCategories.length}</span>
                     </div>
-                    <p class="text-lg">${this.insights.subsurface}</p>
-                </div>
-                
-                <div class="${cardClass} p-8 rounded-2xl">
-                    <div class="${isGentle ? 'text-amber-700' : 'text-indigo-700'} text-sm font-semibold mb-3">
-                        ${isGentle ? 'The tension you\'re standing inside' : 'Core Tension'}
+                    
+                    <!-- Toggle switch -->
+                    <div class="flex items-center justify-center gap-4 mb-8">
+                        <span class="text-sm ${isGentle ? 'font-semibold text-purple-600' : 'text-gray-500'}">Gentle</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" ${this.insightMode === 'strategic' ? 'checked' : ''} onchange="sanctuaryTool.toggleInsightMode()">
+                            <span class="slider"></span>
+                        </label>
+                        <span class="text-sm ${!isGentle ? 'font-semibold text-purple-600' : 'text-gray-500'}">Strategic</span>
                     </div>
-                    <p class="text-2xl font-bold ${isGentle ? 'text-amber-900' : 'text-indigo-900'}">${this.insights.tension}</p>
-                    <p class="mt-3 text-gray-600">
-                        ${isGentle 
-                            ? 'Many challenges aren\'t problems to remove — they\'re tensions to hold. Both sides matter.' 
-                            : 'Structural tension requiring conscious navigation, not resolution'}
-                    </p>
                 </div>
                 
-                <div class="${cardClass} p-8 rounded-2xl">
-                    <div class="${isGentle ? 'text-amber-700' : 'text-indigo-700'} text-sm font-semibold mb-3">
-                        ${isGentle ? 'Where a small shift could help most' : 'Leverage Point'}
+                <!-- Single Insight Card -->
+                <div class="insight-card-enter">
+                    <div class="glass-card p-10 md:p-12 rounded-3xl mb-8 text-center">
+                        <div class="text-purple-400 text-sm font-medium mb-6 tracking-wider">
+                            ${isGentle ? currentCategory.gentle : currentCategory.strategic}
+                        </div>
+                        
+                        <div class="insight-text-reveal">
+                            ${currentCategory.key === 'tension' 
+                                ? `<p class="text-4xl md:text-5xl font-serif text-purple-600 mb-8">${insightText}</p>`
+                                : `<p class="text-2xl md:text-3xl text-gray-700 leading-relaxed">${insightText}</p>`
+                            }
+                        </div>
+                        
+                        <!-- Insight-specific guidance -->
+                        <div class="mt-10 pt-8 border-t border-purple-100">
+                            <p class="text-gray-500 text-sm italic">
+                                ${isGentle 
+                                    ? 'Take a moment with this perspective.'
+                                    : 'Consider this systemic view.'
+                                }
+                            </p>
+                        </div>
                     </div>
-                    <p class="text-lg">${this.insights.leverage}</p>
                 </div>
                 
-                <div class="${cardClass} p-8 rounded-2xl">
-                    <div class="${isGentle ? 'text-amber-700' : 'text-indigo-700'} text-sm font-semibold mb-3">
-                        ${isGentle ? 'Who you are becoming through this' : 'Evolving Identity'}
-                    </div>
-                    <p class="text-lg">${this.insights.future}</p>
-                </div>
-                
-                <div class="${cardClass} p-8 rounded-2xl">
-                    <div class="${isGentle ? 'text-amber-700' : 'text-indigo-700'} text-sm font-semibold mb-3">
-                        ${isGentle ? 'Something you already have' : 'Strengths to Amplify'}
-                    </div>
-                    <p class="text-lg">${this.insights.strengths}</p>
-                </div>
-                
-                <div class="${cardClass} p-8 rounded-2xl">
-                    <div class="${isGentle ? 'text-amber-700' : 'text-indigo-700'} text-sm font-semibold mb-3">
-                        ${isGentle ? 'Something you don\'t need to carry alone' : 'Patterns to Release'}
-                    </div>
-                    <p class="text-lg">${this.insights.release}</p>
-                </div>
-            </div>
-            
-            <div class="text-center">
-                <p class="${subtitleColor} mb-8 max-w-2xl mx-auto">
-                    ${isGentle
-                        ? 'These perspectives are invitations to see differently, not instructions to act immediately.'
-                        : 'Systemic insights are thought-starters for strategic reflection, not directives for action.'}
-                </p>
-                
-                <div class="flex gap-6 justify-center">
-                    <button onclick="sanctuaryTool.prevScreen()"
-                        class="px-8 py-4 border-2 ${isGentle ? 'border-amber-300 text-amber-700' : 'border-indigo-300 text-indigo-700'} rounded-2xl hover:${isGentle ? 'bg-amber-50' : 'bg-indigo-50'}">
-                        Back to Sanctuary
+                <!-- Navigation -->
+                <div class="flex gap-4 justify-between mt-10">
+                    ${this.currentInsightIndex > 0 
+                        ? `<button onclick="sanctuaryTool.prevScreen()" class="luxury-button-secondary px-8 py-4 rounded-2xl font-medium text-gray-700">Previous Insight</button>`
+                        : `<button onclick="sanctuaryTool.prevScreen()" class="luxury-button-secondary px-8 py-4 rounded-2xl font-medium text-gray-700">Back to Sanctuary</button>`
+                    }
+                    
+                    <button onclick="sanctuaryTool.nextScreen()" class="luxury-button px-8 py-4 text-white font-medium rounded-2xl">
+                        ${isLastInsight ? 'Continue to Your Artefact' : 'Next Insight'}
                     </button>
-                    <button onclick="sanctuaryTool.nextScreen()"
-                        class="px-8 py-4 bg-gradient-to-r ${isGentle ? 'from-amber-500 to-amber-600' : 'from-indigo-500 to-indigo-600'} text-white font-semibold rounded-2xl hover:shadow-lg">
-                        Create Your Artefact
-                    </button>
+                </div>
+                
+                <!-- Progress dots -->
+                <div class="flex justify-center gap-2 mt-10">
+                    ${this.insightCategories.map((_, index) => `
+                        <div class="w-2 h-2 rounded-full ${index === this.currentInsightIndex ? 'bg-purple-500' : 'bg-purple-200'}"></div>
+                    `).join('')}
                 </div>
             </div>
         </div>`;
     },
 
+    // Keep the artefact screen (but update branding)
     renderArtefact() {
         if (!this.artefact) {
             this.artefact = this.generateArtefact(this.sessionData, this.insights);
         }
         
         return `
-        <div class="fade-in">
-            <div class="text-center mb-12">
-                <h1 class="text-4xl font-serif font-bold mb-4 text-emerald-900">Your Personal Artefact</h1>
-                <p class="text-emerald-700">Insight fades. Artefacts stay.</p>
-            </div>
-            
-            <div class="bg-gradient-to-br from-amber-50 to-emerald-50 border-2 border-amber-200 p-12 rounded-3xl shadow-xl mb-12 max-w-2xl mx-auto relative overflow-hidden">
-                <div class="absolute top-4 right-4 text-amber-200 text-6xl opacity-20">
-                    <i class="fas fa-seedling"></i>
+        <div class="fade-in py-12 px-4">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-12">
+                    <div class="inline-block px-6 py-2 glass-card rounded-full mb-6">
+                        <span class="text-purple-400 text-sm font-medium">Step 6 of 7</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-serif font-light mb-6 gradient-text">Your Sacred Artefact</h1>
+                    <p class="text-gray-600 font-light text-lg">Wisdom to carry forward</p>
                 </div>
                 
-                <div class="text-center mb-12 relative z-10">
-                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r from-amber-200 to-emerald-200 flex items-center justify-center">
-                        <i class="fas fa-scroll text-3xl text-amber-700"></i>
+                <!-- Visual Artefact -->
+                <div class="relative mb-16">
+                    <div class="glow-orb mx-auto absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-full max-w-md"></div>
+                    
+                    <div class="glass-card-dark rounded-3xl p-12 relative z-10">
+                        <!-- Watermark -->
+                        <div class="absolute top-6 right-6 text-purple-200 text-6xl opacity-30">
+                            <i class="fas fa-feather"></i>
+                        </div>
+                        
+                        <!-- Branding -->
+                        <div class="text-center mb-12">
+                            <div class="inline-block px-4 py-2 bg-white/30 rounded-full mb-8">
+                                <span class="text-purple-600 text-xs font-medium tracking-widest">SACRED INTERVENTION</span>
+                            </div>
+                            <p class="text-purple-400 text-sm font-light mb-2">FOR YOUR FUTURE SELF</p>
+                            <p class="text-gray-500 text-sm">${this.artefact.date}</p>
+                        </div>
+                        
+                        <!-- Artefact Content -->
+                        <div class="space-y-12">
+                            <div class="text-center">
+                                <div class="text-purple-400 text-sm font-medium mb-4 tracking-wider">ONE SENTENCE OF TRUTH</div>
+                                <p class="text-3xl md:text-4xl font-serif text-gray-800 leading-tight italic">
+                                    "${this.artefact.sentenceOfTruth}"
+                                </p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <div class="text-purple-400 text-sm font-medium mb-3 tracking-wider">PATTERN TO LOOSEN</div>
+                                    <p class="text-xl text-gray-700">${this.artefact.patternToRelease}</p>
+                                </div>
+                                
+                                <div>
+                                    <div class="text-purple-400 text-sm font-medium mb-3 tracking-wider">STRENGTH TO KEEP</div>
+                                    <p class="text-xl text-gray-700">${this.artefact.strengthToKeep}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center pt-8 border-t border-purple-100">
+                                <div class="text-purple-400 text-sm font-medium mb-4 tracking-wider">GENTLE COMMITMENT</div>
+                                <p class="text-2xl font-serif text-gray-800">
+                                    "${this.artefact.gentleCommitment}"
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-12 text-center">
+                            <p class="text-gray-500 text-sm italic">
+                                This artefact is yours. Screenshot it, write it down, or carry it in your heart.
+                            </p>
+                        </div>
                     </div>
-                    <p class="text-amber-800 text-sm font-semibold tracking-widest">SACRED KEEP • ${this.artefact.date}</p>
                 </div>
                 
-                <div class="space-y-12 relative z-10">
-                    <div class="border-b border-amber-300 pb-12">
-                        <div class="text-emerald-700 text-sm font-semibold mb-4 tracking-wider">ONE SENTENCE OF TRUTH</div>
-                        <p class="text-3xl font-serif text-amber-900 leading-tight">"${this.artefact.sentenceOfTruth}"</p>
+                <div class="text-center">
+                    <div class="flex gap-4 justify-center flex-wrap">
+                        <button onclick="sanctuaryTool.prevScreen()" 
+                            class="luxury-button-secondary px-8 py-4 rounded-2xl font-medium text-gray-700">
+                            Back to Insights
+                        </button>
+                        <button onclick="sanctuaryTool.nextScreen()" 
+                            class="luxury-button px-10 py-4 text-white font-medium rounded-2xl">
+                            Integration
+                        </button>
                     </div>
-                    
-                    <div class="border-b border-amber-300 pb-12">
-                        <div class="text-emerald-700 text-sm font-semibold mb-4 tracking-wider">ONE PATTERN TO LOOSEN</div>
-                        <p class="text-2xl text-amber-800">${this.artefact.patternToRelease}</p>
-                    </div>
-                    
-                    <div class="border-b border-amber-300 pb-12">
-                        <div class="text-emerald-700 text-sm font-semibold mb-4 tracking-wider">ONE STRENGTH TO KEEP</div>
-                        <p class="text-2xl text-amber-800">${this.artefact.strengthToKeep}</p>
-                    </div>
-                    
-                    <div>
-                        <div class="text-emerald-700 text-sm font-semibold mb-4 tracking-wider">ONE GENTLE COMMITMENT</div>
-                        <p class="text-3xl font-serif text-amber-900">"${this.artefact.gentleCommitment}"</p>
-                    </div>
-                </div>
-                
-                <div class="mt-16 pt-8 border-t border-amber-300 text-center relative z-10">
-                    <p class="text-amber-600 text-sm italic">This artefact is yours. Screenshot it, write it down, or carry it in your heart.</p>
-                </div>
-            </div>
-            
-            <div class="text-center">
-                <div class="flex gap-6 justify-center">
-                    <button onclick="sanctuaryTool.prevScreen()"
-                        class="px-8 py-4 border-2 border-emerald-300 text-emerald-700 rounded-2xl hover:bg-emerald-50">
-                        Back to Understanding
-                    </button>
-                    <button onclick="sanctuaryTool.nextScreen()"
-                        class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-2xl hover:shadow-lg">
-                        Companionship
-                    </button>
                 </div>
             </div>
         </div>`;
@@ -623,44 +702,41 @@ const sanctuaryTool = {
 
     renderCompanionship() {
         return `
-        <div class="fade-in min-h-screen flex flex-col justify-center items-center">
+        <div class="fade-in min-h-screen flex flex-col justify-center items-center py-12 px-4">
             <div class="text-center max-w-2xl">
-                <div class="w-24 h-24 mx-auto mb-10 rounded-full bg-gradient-to-r from-slate-700 to-slate-900 flex items-center justify-center">
-                    <i class="fas fa-hand-holding-heart text-3xl text-white"></i>
+                <div class="relative mb-12">
+                    <div class="glow-orb mx-auto absolute left-1/2 -translate-x-1/2"></div>
+                    <div class="breathing-circle mx-auto rounded-full flex items-center justify-center relative z-10 glass-card-dark">
+                        <i class="fas fa-hand-holding-heart text-5xl text-purple-200 floating"></i>
+                    </div>
                 </div>
                 
-                <h1 class="text-3xl font-serif font-bold mb-8 text-slate-800">Human Presence</h1>
+                <h1 class="text-5xl font-serif font-light mb-12 gradient-text">Integration</h1>
                 
-                <div class="bg-gradient-to-br from-slate-800 to-slate-900 text-white p-10 rounded-2xl shadow-2xl mb-10">
-                    <div class="flex items-center justify-center gap-4 mb-8">
-                        <div class="w-3 h-3 bg-rose-400 rounded-full animate-pulse"></div>
-                        <span class="text-slate-300">Live companionship available</span>
-                        <div class="w-3 h-3 bg-rose-400 rounded-full animate-pulse" style="animation-delay: 0.3s"></div>
-                    </div>
-                    
-                    <p class="text-2xl italic mb-10 leading-relaxed">
+                <div class="glass-card-dark p-12 rounded-3xl mb-10">
+                    <p class="text-2xl md:text-3xl text-gray-200 font-serif italic leading-relaxed mb-10">
                         "What you named today matters.<br>
                         You don't have to carry it alone.<br>
                         Trust your own wisdom as it unfolds."
                     </p>
                     
                     <div class="text-center">
-                        <div class="inline-flex items-center gap-3 text-slate-300">
+                        <div class="inline-flex items-center gap-4 text-purple-200">
                             <i class="fas fa-clock"></i>
-                            <span>90 seconds of presence</span>
-                            <i class="fas fa-heart ml-3"></i>
-                            <span>No teaching, just witnessing</span>
+                            <span class="font-light">90 seconds of presence</span>
+                            <i class="fas fa-heart ml-4"></i>
+                            <span class="font-light">No teaching, just witnessing</span>
                         </div>
                     </div>
                 </div>
                 
-                <p class="text-slate-600 mb-12 max-w-md mx-auto">
+                <p class="text-gray-400 mb-12 max-w-md mx-auto font-light text-lg">
                     This is not instruction. This is companionship.<br>
                     You have already done the important work.
                 </p>
                 
-                <button onclick="sanctuaryTool.nextScreen()"
-                    class="px-12 py-4 bg-gradient-to-r from-slate-700 to-slate-800 text-white text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                <button onclick="sanctuaryTool.nextScreen()" 
+                    class="luxury-button px-12 py-4 text-white text-lg font-medium rounded-2xl">
                     Complete Your Journey
                 </button>
             </div>
@@ -669,57 +745,61 @@ const sanctuaryTool = {
 
     renderReturn() {
         return `
-        <div class="fade-in min-h-screen flex flex-col justify-center items-center">
+        <div class="fade-in min-h-screen flex flex-col justify-center items-center py-12 px-4">
             <div class="text-center max-w-2xl">
-                <div class="w-32 h-32 mx-auto mb-10 rounded-full bg-gradient-to-r from-emerald-100 to-teal-100 flex items-center justify-center">
-                    <i class="fas fa-dove text-5xl text-emerald-600"></i>
+                <div class="relative mb-12">
+                    <div class="glow-orb mx-auto absolute left-1/2 -translate-x-1/2"></div>
+                    <div class="w-40 h-40 mx-auto rounded-full flex items-center justify-center relative z-10 glass-card-dark">
+                        <i class="fas fa-dove text-6xl text-purple-200 floating"></i>
+                    </div>
                 </div>
                 
-                <h1 class="text-4xl font-serif font-bold mb-8 text-emerald-900">Journey Complete</h1>
+                <h1 class="text-5xl font-serif font-light mb-8 gradient-text">Journey Complete</h1>
                 
-                <div class="gentle-card p-12 rounded-2xl shadow-sm mb-12">
-                    <p class="text-2xl text-emerald-800 mb-10 leading-relaxed">
+                <div class="glass-card p-12 rounded-3xl mb-12">
+                    <p class="text-2xl text-gray-700 mb-10 leading-relaxed font-light">
                         You have moved through naming to understanding,<br>
-                        from insight to something tangible to carry.
+                        from insight to something sacred to carry.
                     </p>
                     
-                    <div class="space-y-6 text-emerald-700">
+                    <div class="space-y-6 text-gray-600">
                         <div class="flex items-center">
-                            <i class="fas fa-check-circle text-emerald-500 text-xl mr-4"></i>
+                            <i class="fas fa-check-circle text-purple-400 mr-4"></i>
                             <span class="text-lg">You named what feels heavy</span>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-check-circle text-emerald-500 text-xl mr-4"></i>
+                            <i class="fas fa-check-circle text-purple-400 mr-4"></i>
                             <span class="text-lg">You paused in sanctuary</span>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-check-circle text-emerald-500 text-xl mr-4"></i>
+                            <i class="fas fa-check-circle text-purple-400 mr-4"></i>
                             <span class="text-lg">You received understanding</span>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-check-circle text-emerald-500 text-xl mr-4"></i>
+                            <i class="fas fa-check-circle text-purple-400 mr-4"></i>
                             <span class="text-lg">You created a sacred artefact</span>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-check-circle text-emerald-500 text-xl mr-4"></i>
-                            <span class="text-lg">You felt human companionship</span>
+                            <i class="fas fa-check-circle text-purple-400 mr-4"></i>
+                            <span class="text-lg">You felt integration</span>
                         </div>
                     </div>
                 </div>
                 
-                <p class="text-emerald-700 mb-12 max-w-lg mx-auto">
+                <p class="text-gray-600 mb-12 max-w-lg mx-auto font-light text-lg">
                     Return when you're ready for your next reflection.<br>
                     Your wisdom is always welcome here.
                 </p>
                 
-                <button onclick="sanctuaryTool.startOver()"
-                    class="px-12 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <button onclick="sanctuaryTool.startOver()" 
+                    class="luxury-button px-14 py-4 text-white text-lg font-medium rounded-2xl">
                     Return When Ready
                 </button>
                 
-                <p class="mt-12 text-emerald-600 text-sm italic">
-                    The work is complete. The integration continues.
-                </p>
+                <div class="mt-12 pt-8 border-t border-purple-100">
+                    <p class="text-purple-400 text-sm font-light tracking-wider">FOR YOUR FUTURE SELF</p>
+                    <p class="text-gray-500 text-xs mt-2">The work is complete. The integration continues.</p>
+                </div>
             </div>
         </div>`;
     },
@@ -730,7 +810,25 @@ const sanctuaryTool = {
         this.insights = null;
         this.artefact = null;
         this.insightMode = 'gentle';
+        this.currentInsightIndex = 0;
         this.render();
+    },
+
+    addCharacterCounters() {
+        if (this.currentScreen === 'primary' || this.currentScreen === 'secondary') {
+            setTimeout(() => {
+                const textarea = this.currentScreen === 'primary' ? 
+                    document.getElementById('primary') : document.getElementById('secondary');
+                const charCount = this.currentScreen === 'primary' ? 
+                    document.getElementById('charCount') : document.getElementById('charCount2');
+                
+                if (textarea && charCount) {
+                    textarea.addEventListener('input', function() {
+                        charCount.textContent = `${this.value.length}`;
+                    });
+                }
+            }, 100);
+        }
     },
 
     render() {
@@ -744,9 +842,11 @@ const sanctuaryTool = {
                 break;
             case 'primary':
                 app.innerHTML = this.renderPrimary();
+                this.addCharacterCounters();
                 break;
             case 'secondary':
                 app.innerHTML = this.renderSecondary();
+                this.addCharacterCounters();
                 break;
             case 'sanctuary':
                 app.innerHTML = this.renderSanctuary();
@@ -767,9 +867,11 @@ const sanctuaryTool = {
     }
 };
 
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     sanctuaryTool.render();
 });
 </script>
 </body>
 </html>
+
